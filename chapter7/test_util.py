@@ -22,3 +22,10 @@ def test_build_message_failure(response):
     result = util.build_message(response(status=400))
 
     assert result["success"] is False
+
+def test_build_message_falure_body(response):
+    body = "not allowed here!"
+    result = util.build_message(response(status=400, body=body))
+
+    assert result["success"] is False
+    assert result["error"] == body
