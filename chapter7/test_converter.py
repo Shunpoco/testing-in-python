@@ -1,18 +1,8 @@
-from distutils.util import strtobool
+import pytest
 import converter
 
 class TestStrToBool(object):
-    def test_y_is_true(self):
-        assert converter.strtobool("y") is True
+    @pytest.mark.parametrize("user_input", ["y", "Y", "yes", "YES", "1", 1])
+    def test_true_values(self, user_input):
+        assert converter.strtobool(user_input) is True
 
-    def test_1_is_true(self):
-        assert converter.strtobool("1") is True
-    
-    def test_Y_is_true(self):
-        assert converter.strtobool("Y") is True
-
-    def test_yes_is_true(self):
-        assert converter.strtobool("yes") is True
-
-    def test_YES_is_true(self):
-        assert converter.strtobool("YES") is True
