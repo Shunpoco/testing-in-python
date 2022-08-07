@@ -14,3 +14,12 @@ def test_build_message_success(monkeypatch):
     result = util.build_message()
 
     assert result["success"] is True
+
+def test_build_message_success2(monkeypatch):
+    def fake_request():
+        return FakeResponse()
+
+    monkeypatch.setattr(util, "make_request", fake_request)
+    result = util.build_message()
+
+    assert result["success"] is True
