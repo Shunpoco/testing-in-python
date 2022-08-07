@@ -29,3 +29,20 @@ def test_build_message_falure_body(response):
 
     assert result["success"] is False
     assert result["error"] == body
+
+def test_set_cache_build_message_failure(response, cache):
+    body = "hogehoge"
+    cache.set("hoge", body)
+
+    result = util.build_message(response(status=400, body=body))
+    
+    assert result["success"] is False
+    assert result["error"] == body
+
+def test_get_cache_build_message_failure(response, cache):
+    body = cache.get("hoge", "")
+
+    result = util.build_message(response(status=400, body=body))
+
+    assert result["success"] is False
+    assert result["error"] == "hogehoge"
