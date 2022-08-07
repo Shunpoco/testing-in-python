@@ -1,3 +1,5 @@
+import pytest
+
 import util
 
 class FakeResponse:
@@ -5,21 +7,13 @@ class FakeResponse:
         self.status = status
         self.body = body
 
-
-def test_build_message_success(monkeypatch):
+@pytest.fixture(autouse=True)
+def monkey_response(monkeypatch):
     def fake_request():
         return FakeResponse()
-    monkeypatch.setattr("util.make_request", fake_request)
-
-    result = util.build_message()
-
-    assert result["success"] is True
-
-def test_build_message_success2(monkeypatch):
-    def fake_request():
-        return FakeResponse()
-
     monkeypatch.setattr(util, "make_request", fake_request)
+
+def test_build_message_success():
     result = util.build_message()
 
     assert result["success"] is True
