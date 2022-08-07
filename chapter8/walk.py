@@ -1,5 +1,10 @@
 import os
 
+def walk(path):
+    for root, dirs, files in os.walk(path):
+        for _file in files:
+            yield os.path.join(root, _file)
+
 def find(path=".", _walk=None):
     _walk = _walk or os.walk
     if path == ".":
@@ -7,9 +12,8 @@ def find(path=".", _walk=None):
 
     python_files = []
 
-    for root, dirs, files in _walk(path):
-        for _file in files:
-            if _file.endswith(".py"):
-                python_files.append(os.path.join(root, _file))
+    for _file in _walk(path):
+        if _file.endswith(".py"):
+            python_files.append(_file)
 
     return python_files
